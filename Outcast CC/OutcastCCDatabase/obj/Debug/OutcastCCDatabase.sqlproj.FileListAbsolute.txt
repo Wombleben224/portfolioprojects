@@ -1,0 +1,6 @@
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\tests\UNIT_07_HOT\Outcast CC\OutcastCCDatabase\bin\Debug\OutcastCCDatabase.dacpac
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\tests\UNIT_07_HOT\Outcast CC\OutcastCCDatabase\bin\Debug\OutcastCCDatabase.dll
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\tests\UNIT_07_HOT\Outcast CC\OutcastCCDatabase\bin\Debug\OutcastCCDatabase.pdb
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\tests\UNIT_07_HOT\Outcast CC\OutcastCCDatabase\obj\Debug\OutcastCCDatabase.sqlprojAssemblyReference.cache
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\tests\UNIT_07_HOT\Outcast CC\OutcastCCDatabase\obj\Debug\OutcastCCDatabase.dll
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\tests\UNIT_07_HOT\Outcast CC\OutcastCCDatabase\obj\Debug\OutcastCCDatabase.pdb

@@ -1,0 +1,18 @@
+﻿
+@{
+  ViewBag.Title = "Index";
+}
+
+  <div class="p-5 m-3 bg-light min-vh-100 d-block">
+    <h2 class="text-center font-weight-bold">Admin Edit</h2>
+
+    <div class="text-center m-3">
+      @Html.ActionLink("Create Event", "CreateEvent", null, new { @class = "btn btn-lg btn-success" })
+    </div>
+    <div class="text-center m-3">
+      @Html.ActionLink("Create Member", "CreateMember", null, new { @class = "btn btn-lg btn-success" })
+    </div>
+    <div class="text-center m-3">
+      @Html.ActionLink("Delete Member", "DeleteMember", null, new { @class = "btn btn-lg btn-success" })
+    </div>
+  </div>

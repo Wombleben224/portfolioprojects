@@ -1,0 +1,20 @@
+﻿@model Outcast_CC.Models.Member
+@{
+  ViewBag.Title = "MemberDetails";
+}
+
+  <div class="p-5 m-3 bg-light min-vh-100 d-block text-center">
+    <h2 class=" font-weight-bold">@Model.Name</h2>
+
+    <div class="container">
+      @Model.Bio
+    </div>
+    <div class="m-3">
+      <img src="~/Content/Photos/0/@Model.ProfileImageName" style="max-height: 700px" alt="" class="img-fluid" />
+      <h5>@Model.VehicleYear @Model.VehicleMake @Model.VehicleModel</h5>
+    </div>
+    <a class="btn btn-secondary" href="@Url.Action("Members", "Outcast")">
+      <i class="fas fa-arrow-left"></i>
+      Go Back
+    </a>
+  </div>

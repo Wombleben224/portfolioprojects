@@ -1,0 +1,6 @@
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\labs\UNIT_03_LAB\WorkOrders\WorkOrders\WorkOrdersDatabase\bin\Debug\WorkOrdersDatabase.dacpac
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\labs\UNIT_03_LAB\WorkOrders\WorkOrders\WorkOrdersDatabase\bin\Debug\WorkOrdersDatabase.dll
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\labs\UNIT_03_LAB\WorkOrders\WorkOrders\WorkOrdersDatabase\bin\Debug\WorkOrdersDatabase.pdb
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\labs\UNIT_03_LAB\WorkOrders\WorkOrders\WorkOrdersDatabase\obj\Debug\WorkOrdersDatabase.dll
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\labs\UNIT_03_LAB\WorkOrders\WorkOrders\WorkOrdersDatabase\obj\Debug\WorkOrdersDatabase.pdb
+C:\Users\benwo\Desktop\all-coursework-Wombleben224\labs\UNIT_03_LAB\WorkOrders\WorkOrders\WorkOrdersDatabase\obj\Debug\WorkOrdersDatabase.sqlprojAssemblyReference.cache

@@ -1,0 +1,43 @@
+﻿@using Outcast_CC.Models
+@model IEnumerable<AppUser>
+@{
+  ViewBag.Title = "Index";
+}
+
+<div class="p-5 m-3 bg-light min-vh-100 d-block">
+  <h2>User Accounts</h2>
+
+  @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-primary" })
+  @Html.ActionLink("Assign Roles", "Index", "Role", null, new { @class = "btn btn-primary" })
+  <div class="card card-primary">
+    <div class="card-body">
+      <table class="table table-striped">
+        <tr><th>Name</th><th>Email</th><th>Actions</th></tr>
+        @if (!Model.Any())
+        {
+          <tr><td colspan="3" class="text-center">No User Accounts</td></tr>
+        }
+        else
+        {
+          foreach (AppUser user in Model)
+          {
+            <tr>
+              <td>@user.UserName</td>
+              <td>@user.Email</td>
+              <td>
+                @using (Html.BeginForm("Delete", "User", new { id = user.Id }))
+                {
+                  @Html.ActionLink("Edit", "Edit", new { id = user.Id }, new { @class = "btn btn-primary btn-sm" })
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i>
+                    Delete
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        }
+      </table>
+    </div>
+  </div>
+</div>

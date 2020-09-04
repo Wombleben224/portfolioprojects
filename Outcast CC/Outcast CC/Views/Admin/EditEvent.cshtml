@@ -1,0 +1,168 @@
+﻿@model Outcast_CC.Models.Event
+@{
+  ViewBag.Title = "Edit Event";
+}
+
+<div class="p-5 m-3 bg-light min-vh-100 d-block">
+  <h2 class="text-center font-weight-bold">Edit Event</h2>
+  <div class="text-center container">
+    @using (Html.BeginForm("EditEvent", "Admin", FormMethod.Post,
+        new { @class = "EventForm", enctype = "multipart/form-data" }))
+    {
+      @Html.ValidationSummary("", new { @class = "text-danger" });
+      @Html.HiddenFor(x => x.EventId);
+      @Html.HiddenFor(x => x.Going);
+
+
+      @Html.LabelFor(x => x.Title)
+      @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.Title, null, new { @class = "text-danger" })
+
+      @Html.LabelFor(x => x.Text)
+      @Html.TextAreaFor(x => x.Text, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.Text, null, new { @class = "text-danger" })
+
+      @Html.LabelFor(x => x.Location)
+      @Html.TextBoxFor(x => x.Location, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.Location, null, new { @class = "text-danger" })
+
+      @Html.LabelFor(x => x.EventDate)
+      @Html.EditorFor(x => x.EventDate, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(x => x.EventDate, null, new { @class = "text-danger" })
+
+      <div class="form-group">
+        @Html.Label("Event Pdf")
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="file" name="file" accept=".pdf"
+                 onchange="$(this).next().html(this.value || 'No File Chosen')">
+          <label class="custom-file-label" for="file">
+            @if (Model.PdfFileName != null)
+            {
+              @Model.PdfFileName.ToString();
+            }
+            else
+            {
+              <span>No File Chosen</span>
+            }
+          </label>
+        </div>
+        <div class="form-group m-2">
+          <button type="submit" class="btn btn-primary" id="SaveButton">
+            <i class="fa-fw fas fa-save"></i>
+            Save
+          </button>
+          <a href="#ConfirmModal" class="btn btn-danger" data-toggle="modal">
+            <i class="fas fa-trash-alt"></i>
+            Delete
+          </a>
+          <a class="btn btn-secondary" href="@Url.Action("Events", "Outcast")">
+            <i class="fas fa-arrow-left"></i>
+            Cancel
+          </a>
+        </div>
+        <div class="form-group">
+          <div id="UploadProgressBar" class="progress" style="height: 20px;">
+            <div class="progress-bar bg-info"
+                 style="width: 0%;"
+                 role="progressbar"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <div class="text-center m-3">
+    </div>
+  </div>
+</div>
+
+<div id="ConfirmModal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete this event? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+        <a href="@Url.Action("DeleteEvent", "Admin", new { id = Model.EventId })" class="btn btn-danger">
+          <i class="fas fa-trash-alt"></i>
+          Delete
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  <script>
+    function setProgress(percent) {
+      const percentString = percent.toFixed(0);
+      $('#UploadProgressBar .progress-bar')
+        .css('width', percentString + '%')
+        .attr('aria-valuenow', percentString)
+        .html(percentString + '% Uploaded')
+        .removeClass('bg-success bg-danger')
+        .addClass('progress-bar-striped progress-bar-animated bg-info');
+    }
+    function setProgressMessage(message, classes) {
+      $('#UploadProgressBar .progress-bar')
+        .html(message)
+        .removeClass('progress-bar-striped progress-bar-animated bg-info bg-success bg-danger')
+        .addClass(classes);
+    }
+
+    $('.EventForm').submit(function (e) {
+      e.preventDefault();
+      $('#SaveButton').attr('disabled', true);
+
+      const form = this;
+      const formdata = new FormData(form);
+
+
+
+      $.ajax({
+        url: '@Url.Action("EditEvent")',
+        method: 'POST',
+        data: formdata,
+        contentType: false,
+        processData: false,
+        xhr: () => {
+          const xhr = new window.XMLHttpRequest();
+
+          xhr.upload.addEventListener('progress', evt => {
+            if (evt.lengthComputable) {
+              const percent = Math.floor(100 * evt.loaded / evt.total);
+              setProgress(percent)
+            }
+          }, false);
+
+          xhr.upload.addEventListener('load', evt => {
+            setProgressMessage('Saving Data...', 'progress-bar-striped progress-bar-animated bg-info')
+          }, false);
+
+          return xhr;
+        }
+      }).done(data => {
+        $('#SaveButton').attr('disabled', false);
+        if (data.Success === true) {
+          setProgressMessage(data.Message, 'bg-success');
+        } else {
+          setProgressMessage(data.Message, 'bg-danger');
+        }
+      })
+        .fail((xhr, textstatus, errorThrown) => {
+          $('#SaveButton').attr('disabled', false);
+          setProgressMessage('Failed!', 'bg-danger');
+        })
+    })
+
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+});
+  </script>
+}

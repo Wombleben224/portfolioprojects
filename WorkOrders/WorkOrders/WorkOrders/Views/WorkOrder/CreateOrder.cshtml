@@ -1,0 +1,87 @@
+﻿@model WorkOrders.Models.Order
+    ViewBag.Title = "CreateOrder";
+}
+
+  <div class="m-5">
+    <h1 class="w-100 text-center m-5 fas fa-briefcase"> Start Work Order</h1>
+
+    <div class="p-3">
+      @Html.Label("Import From Excel Sheet")
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="inputGroupFile04">
+          <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+        </div>
+      </div>
+    </div>
+
+    @using (Html.BeginForm("SubmitOrder", "WorkOrder"))
+    {
+      @Html.ValidationSummary("", new { @class = "text-danger" });
+
+      <div class="p-3">
+        <div class="form-group">
+          <label>Customer Name</label>
+          @Html.TextBoxFor(x => x.Customer.customername, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.Customer.customername, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          @Html.TextBoxFor(x => x.Customer.PhoneNumber, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.Customer.PhoneNumber, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Order Number</label>
+          @Html.TextBoxFor(x => x.ordernumber, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.ordernumber, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Technician Name</label>
+          @Html.TextBoxFor(x => x.techname, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.techname, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Repair Date</label>
+          @Html.EditorFor(x => x.repairdate, new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(x => x.repairdate, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Year of Vehicle</label>
+          @Html.TextBoxFor(x => x.vehicleyear, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.vehicleyear, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Make of Vehicle</label>
+          @Html.TextBoxFor(x => x.vehiclemake, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.vehiclemake, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Model of Vehicle</label>
+          @Html.TextBoxFor(x => x.vehiclemodel, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.vehiclemodel, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Vehicle Odometer</label>
+          @Html.TextBoxFor(x => x.vehiclemileage, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.vehiclemileage, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label>Vehicle Liscence plate</label>
+          @Html.TextBoxFor(x => x.vehicleliscenseplate, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.vehicleliscenseplate, null, new { @class = "text-danger" })
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <i class="far fa-save"></i>
+        Save Order
+      </button>
+      @Html.ActionLink("Cancel and return to Home Page", "Index", null,
+    htmlAttributes: new { @class = "btn btn-secondary" })
+    }
+  </div>
+
+@section Scripts{
+<script>
+
+</script>
+}

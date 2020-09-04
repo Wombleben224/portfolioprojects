@@ -1,0 +1,84 @@
+﻿@using Outcast_CC.Models
+@model IEnumerable<AppUser>
+@{
+  ViewBag.Title = "ChatterBox: ChatRoom";
+}
+
+<div class="d-flex flex-column flex-grow-1">
+  <section class="bg-dark text-white align-items-center d-flex p-2">
+    <h2 class="flex-grow-1">Outcast Chat</h2>
+  </section>
+  <section id="messages"
+        class="flex-grow-1 p-2 d-flex flex-column-reverse bg-light">
+    <span class="font-italic text-muted">Messages Loading...</span>
+
+  </section>
+  <section class="bg-dark card-footer">
+    @using (Html.BeginForm("SendMessage", "Chat", FormMethod.Post,
+new { id = "SendMessageForm" }))
+{
+      <input type="hidden" value="@ViewBag.user" name="user" />
+      <label class="sr-only">Enter Message Here...</label>
+      <div class="text-center input-group">
+        <input class="form-control" autofocus type="text" name="text" id="text" placeholder="Enter Message Here..." />
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-outline-light">Send</button>
+        </div>
+      </div>
+}
+  </section>
+</div>
+
+@section scripts{
+  <script>
+    const user = '@User.Identity.Name';
+    const isAdmin = '@(Request.IsAuthenticated && User.IsInRole("Admin") ? "true" : "false")';
+
+    function DeleteMessage(btn) {
+      $.post('@Url.Action("DeleteMessage", "Admin")', { id : $(btn).data('message-id') })
+        .done(function (data) {
+
+        })
+    };
+
+    function loadMessages() {
+      $.post('@Url.Action("GetMessages")')
+        .done(function (data) {
+          $('#messages').empty();
+          $('#messages').append(data.map(
+            msg => `<div class="border">
+              <span class="text-muted">${msg.Sent}</span >
+              <span class="font-weight-bold"> ${msg.User}:</span>
+              <span> ${msg.Text}</span>` +
+              (isAdmin == 'true' ? `<button id="DeleteMessage" data-message-id="${msg.Id}" onclick="DeleteMessage(this)"
+                  class="btn btn-sm btn-outline-danger float-right">Delete</button>` : "") +
+            `</div>`
+          ));
+        })
+        .fail(function (xhr, textStatus, errorThrown) {
+          console.error(textStatus)
+        });
+    }
+
+    function sendMessage(text) {
+      $.post('@Url.Action("SendMessage")', { text: text, user: user })
+        .done(function (data) {
+          loadMessages()
+          $('#text').val('').focus();
+        })
+          .fail(function (xhr, textStatus, errorThrown) {
+          console.error(textStatus)
+        });
+
+    }
+    loadMessages();
+    $('#SendMessageForm').submit(function (e) {
+      e.preventDefault();
+
+      const text = $('#text').val();
+      if (text) { sendMessage(text); }
+    });
+
+    setInterval(loadMessages, 1000);
+  </script>
+}

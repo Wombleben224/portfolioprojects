@@ -1,0 +1,32 @@
+﻿@model Outcast_CC.Models.AppUser
+
+  <div class="p-5 m-3 bg-light min-vh-100 d-block">
+    <h2>Subscribe</h2>
+    <p>Welcome to the best newletter there is. Fill out the form below to join.</p>
+
+
+    @using (Html.BeginForm())
+    {
+      @Html.HiddenFor(x => x.IsConfirmed)
+      @Html.HiddenFor(x => x.IsSubscribed)
+
+      <div class="form-group">
+        @Html.LabelFor(x => x.UserName)
+        @Html.EditorFor(x => x.UserName, new { htmlAttributes = new { @class = "form-control", autocomplete = "name" } })
+        @Html.ValidationMessageFor(x => x.UserName, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        @Html.LabelFor(x => x.Email)
+        @Html.EditorFor(x => x.Email, new { htmlAttributes = new { @class = "form-control", autocomplete = "email", type = "email" } })
+        @Html.ValidationMessageFor(x => x.Email, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-danger btn-lg">
+          Subscribe!
+        </button>
+      </div>
+      <div class="form-group">
+        @Html.ValidationSummary(false, null, new { @class = "text-danger" })
+      </div>
+    }
+  </div>

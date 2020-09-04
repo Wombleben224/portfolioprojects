@@ -1,0 +1,56 @@
+﻿@using Outcast_CC.Models
+@model IEnumerable<AppRole>
+@{ 
+  ViewBag.Title = "Roles";
+
+  Func<string, string> getUserName = id => ViewBag.users[id].UserName;
+}
+  <div class="p-5 m-3 bg-light min-vh-100 d-block">
+    <h2>Roles</h2>
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-striped">
+          <tr><th>Name</th><th>Users</th><th></th></tr>
+          @if (Model.Count() == 0)
+          {
+            <tr><td colspan="4" class="text-center">No Roles</td></tr>
+          }
+          else
+          {
+            foreach (AppRole role in Model)
+            {
+              <tr>
+                <td>@role.Name</td>
+                <td>
+                  @if (role.Users == null || role.Users.Count == 0)
+                  {
+                    @: No Users in Role
+                  }
+                  else
+                  {
+                    <p>
+                      @string.Join(", ", role.Users.Select(x =>
+                 getUserName(x.UserId)))
+                    </p>
+                  }
+                </td>
+                <td>
+                  @using (Html.BeginForm("Delete", "RoleAdmin",
+                  new { id = role.Id }))
+                  {
+                    @Html.ActionLink("Edit", "Edit", new { id = role.Id },
+                    new { @class = "btn btn-primary btn-xs" })
+                    <button class="btn btn-danger btn-xs"
+                            type="submit">
+                      Delete
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          }
+        </table>
+      </div>
+    </div>
+    @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-primary" })
+  </div>

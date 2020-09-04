@@ -1,0 +1,32 @@
+﻿
+@{
+  ViewBag.Title = "Excel";
+}
+
+<div class="p-5 m-3 bg-light min-vh-100 d-block">
+  <h1>Excel Upload</h1>
+  <div class="">
+    Select an excel file to upload events in bulk.
+  </div>
+  @using (Html.BeginForm("UploadEvents", "Admin", FormMethod.Post,
+      new { @class = "EventForm", enctype = "multipart/form-data" }))
+  {
+    <div class="input-group">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="file" name="file"
+               onchange="$(this).next().html(this.value || 'No File Chosen')">
+        <label class="custom-file-label" for="file">Select An Excel Spreadsheet</label>
+      </div>
+      <div class="input-group-append">
+        <button class="btn btn-outline-success" type="submit">
+          <i class="fas fa-arrow-up"></i>
+          Upload
+        </button>
+      </div>
+    </div>
+    <a class="btn btn-secondary" href="@Url.Action("CreateEvent", "Admin")">
+      <i class="fas fa-arrow-left"></i>
+      Cancel
+    </a>
+  }
+</div>

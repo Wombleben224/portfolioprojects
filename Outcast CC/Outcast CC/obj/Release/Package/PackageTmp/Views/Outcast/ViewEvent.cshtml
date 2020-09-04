@@ -1,0 +1,43 @@
+﻿@model Outcast_CC.Models.Event
+@{
+  ViewBag.Title = "View Event";
+}
+
+  <div class="p-5 m-3 bg-light min-vh-100 d-block">
+    <a class="btn btn-secondary text-left" href="@Url.Action("Events", "Outcast")">
+      <i class="fas fa-arrow-left"></i>
+      Go Back
+    </a>
+    <h2 class="text-center font-weight-bold">@Model.Title</h2>
+    <div class="text-left"><i class="fas fa-location-arrow"></i> @Model.Location</div>
+    <div class="text-left"><i class="fas fa-calendar-day"></i> @Model.EventDate.ToShortDateString()</div>
+    <div class="text-center">
+      @Model.Text
+    </div>
+    @if (Model.UsersGoing.Count != 0)
+    {
+      <div class="row">
+        <h4 class="text-center col-12">Users Going</h4>
+        @foreach (var user in Model.UsersGoing)
+        {
+          <div class="text-center col-md-6 col-sm-1">
+            @user
+          </div>
+        }
+      </div>
+    }
+    <div class="text-center">
+      @if (Model.PdfFileName != null)
+      {
+        <a target="_blank" href="~/Content/Events/0/@Model.PdfFileName" class="d-block">
+          <i class="fa-fw fas fa-file"></i>
+          @Model.PdfFileName
+        </a>
+        <iframe src="~/Content/Events/0/@Model.PdfFileName"
+                class="d-block mb-3"
+                style="width:100%; height: 400px;">
+        </iframe>
+      }
+    </div>
+  </div>
+

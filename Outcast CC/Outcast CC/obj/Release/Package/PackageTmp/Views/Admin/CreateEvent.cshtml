@@ -1,0 +1,59 @@
+﻿@model Outcast_CC.Models.Event
+@{
+  ViewBag.Title = "CreateEvent";
+}
+
+<div class="p-5 m-3 bg-light min-vh-100 d-block">
+  <h2 class="text-center font-weight-bold">Create Event</h2>
+  <div class="text-center container">
+    @using (Html.BeginForm("CreateEvent", "Admin", FormMethod.Post,
+        new { @class = "EventForm", enctype = "multipart/form-data" }))
+    {
+      @Html.ValidationSummary(null, new { @class = "text-danger" })
+
+      @Html.LabelFor(x => x.Title)
+      @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.Title, null, new { @class = "text-danger" })
+      <br />
+
+      @Html.LabelFor(x => x.Text)
+      @Html.TextAreaFor(x => x.Text, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.Text, null, new { @class = "text-danger" })
+      <br />
+
+      @Html.LabelFor(x => x.Location)
+      @Html.TextBoxFor(x => x.Location, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.Location, null, new { @class = "text-danger" })
+      <br />
+
+      @Html.LabelFor(x => x.EventDate)
+      @Html.EditorFor(x => x.EventDate, new { htmlAttributes = new { @class = "form-control" } })
+      @Html.ValidationMessageFor(x => x.EventDate, null, new { @class = "text-danger" })
+
+      <div class="form-group">
+        @Html.Label("Resume Pdf")
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="file" name="file" accept=".pdf"
+                 onchange="$(this).next().html(this.value || 'No File Chosen')">
+          <label class="custom-file-label" for="file">No File Chosen</label>
+        </div>
+        <div class="m-2">
+          <button type="submit" class="btn btn-primary" id="SaveButton">
+            <i class="fa-fw fas fa-save"></i>
+            Save
+          </button>
+          <a class="btn btn-success" href="@Url.Action("UploadEvents", "Admin")">
+            <i class="fas fa-arrow-up"></i>
+            Excel Upload
+          </a>
+          <a class="btn btn-secondary" href="@Url.Action("Events", "Outcast")">
+            <i class="fas fa-arrow-left"></i>
+            Cancel
+          </a>
+        </div>
+      </div>
+    }
+    <div class="text-center m-3">
+    </div>
+  </div>
+</div>

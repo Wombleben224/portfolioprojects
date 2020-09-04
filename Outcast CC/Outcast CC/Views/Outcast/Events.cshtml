@@ -1,0 +1,148 @@
+﻿@model Outcast_CC.Models.EventViewModel
+@using Outcast_CC.HtmlHelpers
+@{
+  ViewBag.Title = "Events";
+}
+
+<div class="p-5 m-3 bg-light min-vh-100">
+  @if (User.IsInRole("Admin"))
+  {
+    <div class="d-flex">
+      <a class="btn btn-success ml-auto" href="@Url.Action("UploadEvents", "Admin")">
+        <i class="fas fa-arrow-up"></i>
+        Excel Upload
+      </a>
+    </div>
+  }
+  <h2 class="text-center font-weight-bold">Outcast Events</h2>
+
+  <div class="text-center">
+    @using (Html.BeginForm("Events", "Outcast", FormMethod.Get))
+    {
+      <label for="q" class="sr-only form-label">Search By Title</label>
+      <div class="input-group">
+        <input type="text" id="q" name="q"
+               placeholder="Search By Title" class="form-control" value="@Model.Query" autocomplete="off" />
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-outline-primary">
+            <i class="fa-fw fas fa-search"></i>
+            Search
+          </button>
+        </div>
+      </div>
+    }
+    @foreach (var item in Model.Events)
+    {
+      <div class="card m-4">
+        <div class="card-header d-flex align-items-center row">
+          <h3 class="m-0 col-sm-12 col-md-6 text-left">@item.Title</h3>
+          <span class="flex-grow-1"></span>
+          <h3 class="m-0 col-sm-12 col-md-6 text-right">@item.EventDate.ToString("MM/dd/yyyy")</h3>
+        </div>
+        <div class="card-body">
+          <div class="text-left">
+            @if ((User.IsInRole("Admin")))
+            {
+              @Html.ActionLink("Edit Event", "EditEvent", "Admin", new { Eventid = item.EventId }, new { @class = "btn btn-sm btn-outline-secondary" })
+            }
+            @Html.ActionLink("View Event", "ViewEvent", "Outcast", new { Eventid = item.EventId }, new { @class = "btn btn-sm btn-outline-secondary" })
+          </div>
+          <div>
+            @item.Text
+          </div>
+          <strong>Location: @item.Location</strong>
+          @if (!Model.EventId.Contains(item.EventId))
+          {
+            if (item.EventDate >= DateTime.Now)
+            {
+              <div>
+                @using (Html.BeginForm("Going", "Admin", FormMethod.Post, new { @class = "GoingForm" }))
+                {
+                  <button type="submit" name="EventId" id="ConfirmButton" value="@item.EventId" class="btn btn-sm btn-outline-dark"><i class="fas fa-check"></i> Confirm Your Going</button>
+                  if (item.Going > 0)
+                  {
+                    <div>
+                      @item.Going Going
+                    </div>
+                  }
+                }
+              </div>
+            }
+          }
+          else
+          {
+            if (item.EventDate >= DateTime.Now)
+            {
+        <div>
+          @using (Html.BeginForm("CancelGoing", "Outcast", FormMethod.Post, new { @class = "CancelGoingForm" }))
+          {
+            <button type="submit" name="CancelledEventId" id="CancelButton" value="@item.EventId" class="btn btn-sm btn-outline-dark"><i class="fas fa-check"></i> Cancel RSVP</button>
+            if (item.Going > 0)
+            {
+              <div>
+                @item.Going Going
+              </div>
+            }
+          }
+        </div>
+
+            }
+            else if (item.Going > 0)
+            {
+              <div> @item.Going Went </div>
+            }
+          }
+        </div>
+      </div>
+    }
+    @Html.PageLinks(Model.pagingInfo,
+   Page => Url.Action("Events", new { Page, q = Model.Query }))
+  </div>
+</div>
+@section Scripts{
+  <script>
+    $('.CancelGoingForm').submit(function (e) {
+      e.preventDefault();
+      $("#CancelButton").attr("disabled", true);
+      const form = $(this)
+
+      const CancelledEventId = form.find('[name=CancelledEventId]').val();
+
+      $.post('@Url.Action("CancelGoing")', { CancelledEventId })
+        .done(function (data) {
+          if (data && data.Success === true) {
+            form.parent().append(data.Going + ' Going');
+            form.slideUp();
+        } else {
+          alert(data.message);
+        }
+      })
+        .fail(function (xhr, textStatus, errorThrown) {
+        alert(textStatus);
+      })
+    })
+
+    $('.GoingForm').submit(function (e) {
+      e.preventDefault();
+      $("#ConfirmButton").attr("disabled", true);
+      const form = $(this)
+
+      const EventId = form.find('[name=EventId]').val();
+
+      $.post('@Url.Action("Going")', { EventId })
+        .done(function (data) {
+          if (data && data.Success === true) {
+            form.parent().append(data.Going + ' Going');
+            form.slideUp();
+        } else {
+          alert(data.message);
+        }
+      })
+        .fail(function (xhr, textStatus, errorThrown) {
+        alert(textStatus);
+      })
+    })
+
+    $("#q").autocomplete({ source: "@Url.Action("EventKeywords")", minlength: 2 });
+  </script>
+}

@@ -1,0 +1,18 @@
+﻿@model Outcast_CC.Models.MemberViewModel
+@{
+  ViewBag.Title = "DeleteMember";
+}
+
+  <div class="p-5 m-3 bg-light min-vh-100 d-block">
+    <h2 class="text-center font-weight-bold">Delete Members</h2>
+    @foreach (var member in Model.Members)
+    {
+      using (Html.BeginForm("DeleteMember", "Admin", FormMethod.Post,
+               new { @class = "DeleteMemberForm", enctype = "multipart/form-data" }))
+      {
+        <h6>@member.Name</h6>
+        <p>@member.VehicleYear @member.VehicleMake @member.VehicleModel</p>
+        <button type="submit" class="btn btn-primary" name="memberId" value="@member.memberId" id="memberId">Delete User</button>
+      }
+    }
+  </div>

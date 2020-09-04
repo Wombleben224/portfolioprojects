@@ -1,0 +1,16 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "Error";
+}
+
+  <div class="p-5 m-3 bg-light min-vh-100 d-block">
+    <h2>Error</h2>
+
+    <ul class="text-danger">
+      @foreach (string err in Model)
+      {
+        <li>@err</li>
+      }
+    </ul>
+    @Html.ActionLink("OK", "Index", null, new { @class = "btn btn-primary"})
+  </div>

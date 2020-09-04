@@ -1,0 +1,50 @@
+﻿@model Outcast_CC.Models.MemberViewModel
+@using Outcast_CC.HtmlHelpers
+@{
+  ViewBag.Title = "Members";
+}
+
+  <div class="p-5 m-3 bg-light min-vh-100 d-block">
+    <h2 class="text-center font-weight-bold">Members</h2>
+    <h6 class="text-center">Click Photos for more info</h6>
+
+    @using (Html.BeginForm("Members", "Outcast", FormMethod.Get))
+    {
+      <label for="q" class="sr-only form-label">Search By Title</label>
+      <div class="input-group">
+        <input type="text" id="q" name="q"
+               placeholder="Search By Name" class="form-control" value="@Model.Query" autocomplete="off" />
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-outline-primary">
+            <i class="fa-fw fas fa-search"></i>
+            Search
+          </button>
+        </div>
+      </div>
+    }
+    <div class="text-center row m-3">
+      @foreach (var member in Model.Members)
+      {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          @if (member.ProfileImageName != null)
+          {
+            <div>
+              <a href="@Url.Action("MemberDetails", "Outcast", new { id = member.memberId })" title="Widget View" class="links">
+                <img alt="Widget View" src="~/Content/Photos/0/Thumbnails/@member.ProfileImageName">
+              </a>
+              <h6>@member.Name</h6>
+              <p>@member.VehicleYear @member.VehicleMake @member.VehicleModel</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+    @Html.PageLinks(Model.pagingInfo,
+  Page => Url.Action("Members", new { Page, q = Model.Query}))
+  </div>
+@section Scripts{
+  <script>
+
+    $("#q").autocomplete({ source: "@Url.Action("MemberKeywords")", minLength: 2});
+  </script>
+}

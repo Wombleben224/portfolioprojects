@@ -1,0 +1,30 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[AspNetUsers]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Drop
+       unnamed constraint on [dbo].[AspNetUsers] (Default Constraint)
+       unnamed constraint on [dbo].[AspNetUsers] (Default Constraint)
+       unnamed constraint on [dbo].[AspNetUsers] (Foreign Key)
+     Table rebuild
+       [dbo].[AspNetUsers] (Table)
+     Create
+       [dbo].[FK_AspNetUsers_MemberId] (Foreign Key)
+
+** Supporting actions
+     Drop
+       [dbo].[FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] (Foreign Key)
+       [dbo].[FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] (Foreign Key)
+       [dbo].[FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] (Foreign Key)
+     Create
+       [dbo].[AspNetUsers].[UserNameIndex] (Index)
+       [dbo].[FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] (Foreign Key)
+       [dbo].[FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] (Foreign Key)
+       [dbo].[FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] (Foreign Key)

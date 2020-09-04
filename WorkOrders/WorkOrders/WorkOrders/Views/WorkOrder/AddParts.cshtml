@@ -1,0 +1,47 @@
+﻿@model WorkOrders.Models.Part
+@{
+  ViewBag.Title = "AddParts";
+}
+
+@if (TempData["Success"] != null)
+{
+  <p class="alert alert-success m-5" id="successMessage">@TempData["Success"]</p>
+}
+
+<div class="m-5">
+  <h1 class="w-100 text-center m-5"><i class="fas fa-cog"></i> Add Parts</h1>
+
+  @using (Html.BeginForm("AddParts", "WorkOrder", FormMethod.Post))
+  {
+    @Html.ValidationSummary("", new { @class = "text-danger" });
+    @Html.HiddenFor(x => x.OrderID)
+    <div class="p-3">
+      <div class="form-group">
+        <label>Parts Name</label>
+        @Html.TextBoxFor(x => x.partsname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.partsname, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Part Number</label>
+        @Html.TextBoxFor(x => x.partsnumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.partsnumber, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Parts Quantity</label>
+        @Html.TextBoxFor(x => x.partsquantity, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.partsquantity, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Part Cost</label>
+        @Html.TextBoxFor(x => x.partcost, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.partcost, null, new { @class = "text-danger" })
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <i class="far fa-save"></i>
+      Add Part
+    </button>
+    @Html.ActionLink("Cancel and return to Home Page", "Index", null,
+  htmlAttributes: new { @class = "btn btn-secondary" })
+  }
+</div>

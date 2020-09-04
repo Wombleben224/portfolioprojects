@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outcast CC", "Outcast CC\Outcast CC.csproj", "{76C7CF00-A897-44B3-B7EE-0C3718F30639}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "OutcastCCDatabase", "OutcastCCDatabase\OutcastCCDatabase.sqlproj", "{C22449B1-2CC5-4BC9-8452-A62DB737B4C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76C7CF00-A897-44B3-B7EE-0C3718F30639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76C7CF00-A897-44B3-B7EE-0C3718F30639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76C7CF00-A897-44B3-B7EE-0C3718F30639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76C7CF00-A897-44B3-B7EE-0C3718F30639}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22449B1-2CC5-4BC9-8452-A62DB737B4C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22449B1-2CC5-4BC9-8452-A62DB737B4C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22449B1-2CC5-4BC9-8452-A62DB737B4C2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C22449B1-2CC5-4BC9-8452-A62DB737B4C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22449B1-2CC5-4BC9-8452-A62DB737B4C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22449B1-2CC5-4BC9-8452-A62DB737B4C2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6AB8B722-F63A-4CD4-B3BB-27E7EC9C55FC}
+	EndGlobalSection
+EndGlobal

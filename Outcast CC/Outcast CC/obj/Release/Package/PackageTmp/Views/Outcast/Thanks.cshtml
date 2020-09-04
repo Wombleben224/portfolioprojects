@@ -1,0 +1,10 @@
+﻿@model Outcast_CC.Models.AppUser
+@{
+  ViewBag.Title = "Thank You!";
+}
+
+<div class="p-5 m-3 bg-light min-vh-100 d-block">
+  <h2 class="text-center font-weight-bold">Thank You!</h2>
+  <p>Please confirm your email to complete the signup process.</p>
+  @Html.ActionLink("Go Back", "Index", null, new { @class = "btn btn-secondary btn-lg" })
+</div>

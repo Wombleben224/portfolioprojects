@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Outcast Car Club</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_news">Add News</string>
+    <string name="title_activity_new_news">Add New News</string>
+
+    <string name="primary_channel_name">New Event Post</string>
+    <string name="primary_channel_description">Notification of new Event Story</string>
+    <string name="toast_error">Error</string>
+    <string name="home_page">Outcast Car Club is a group focused on providing a community of car enthusiasts of any form. Cars, Trucks, Motorcycles are all welcome. We strive to be welcoming and non-judgemental group. Giving those that feel they don\'t fit in with communities of high end vehicles a home to do what they love.</string>
+
+</resources>

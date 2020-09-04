@@ -1,0 +1,15 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       Primary Key: unnamed constraint on [dbo].[Members]
+     Possible data issues
+       None
+
+** User actions
+     Create
+       Primary Key: unnamed constraint on [dbo].[Members] (Primary Key)
+
+** Supporting actions

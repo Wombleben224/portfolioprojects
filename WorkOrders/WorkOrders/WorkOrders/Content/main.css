@@ -1,0 +1,24 @@
+﻿body {
+}
+
+.ui-autocomplete {
+  border: none !important;
+  padding: 0;
+  border-radius: 4px;
+  background: #333333;
+  color: #cccccc;
+  max-height: 10em;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+  .ui-autocomplete .ui-menu-item-wrapper {
+    padding: 4px;
+    padding-left: 16px;
+    border-radius: 4px;
+  }
+
+    .ui-autocomplete .ui-menu-item-wrapper.ui-state-active {
+      background-color: #007bff !important;
+      border-color: #007bff !important;
+    }

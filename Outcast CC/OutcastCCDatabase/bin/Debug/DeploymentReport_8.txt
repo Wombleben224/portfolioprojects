@@ -1,0 +1,20 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[Events]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       The column [dbo].[Events].[BlogPostId] is being dropped, data loss could occur.
+
+** User actions
+     Drop
+       unnamed constraint on [dbo].[Events] (Default Constraint)
+     Table rebuild
+       [dbo].[Events] (Table)
+
+** Supporting actions
+
+The column [dbo].[Events].[BlogPostId] is being dropped, data loss could occur.
+

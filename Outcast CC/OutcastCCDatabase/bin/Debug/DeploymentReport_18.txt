@@ -1,0 +1,21 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[Members]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Drop
+       unnamed constraint on [dbo].[AspNetUsers] (Foreign Key)
+     Alter
+       [dbo].[AspNetUsers] (Table)
+     Table rebuild
+       [dbo].[Members] (Table)
+
+** Supporting actions
+     Create
+       Foreign Key: unnamed constraint on [dbo].[AspNetUsers] (Foreign Key)

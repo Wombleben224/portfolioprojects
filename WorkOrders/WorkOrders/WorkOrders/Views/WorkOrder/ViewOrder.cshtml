@@ -1,0 +1,137 @@
+﻿@model WorkOrders.Models.Order
+@{
+  ViewBag.Title = "ViewOrder";
+}
+
+<h1 class="m-5">View Order</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Customer Name: </h4>
+      @Model.Customer.customername
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Customer Phone: </h4>
+      @Model.Customer.PhoneNumber
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Customer Address: </h4>
+      @Model.Customer.address
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Customer Email: </h4>
+      @Model.Customer.email
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Order Number: </h4>
+      @Model.ordernumber
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Order Recieved By: </h4>
+      @Model.techname
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Repair Date: </h4>
+      @Model.repairdate.ToLocalTime()
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Vehicle Year: </h4>
+      @Model.vehicleyear
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Vehicle Make: </h4>
+      @Model.vehiclemake
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Vehicle Model: </h4>
+      @Model.vehiclemodel
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Odometer Reading: </h4>
+      @Model.vehiclemileage
+    </div>
+    <div class="col-md-3 col-sm-12 text-center">
+      <h4>Vehicle Liscense Plate: </h4>
+      @Model.vehicleliscenseplate
+    </div>
+    <div class="col-md-6 col-sm-12 text-center">
+      <h4>Labor Hours: </h4>
+      @Model.laborhours
+    </div>
+    <div class="col-md-6 col-sm-12 text-center">
+      <h4>Labor Total Cost: </h4>
+      @Model.labortotals
+    </div>
+    <h4 class="text-center col col-md-8">Parts: </h4>
+    <div class="col col-md-4"></div>
+    <h6 class="col-md-2 col text-center">
+      Part Name:
+    </h6>
+    <h6 class="col-md-2 col text-center">
+      Part Number:
+    </h6>
+    <h6 class="col col-md-2 text-center">
+      Parts Quantity:
+    </h6>
+    <h6 class="col-md-2 col text-center">
+      Part Cost:
+    </h6>
+    <div class="col col-md-4"></div>
+    @foreach (var item in Model.Parts)
+    {
+      //using (Html.BeginForm("DeletePart", "WorkOrder", FormMethod.Post, new { @class = "DeleteForm" }))
+      //{
+        <div class="col col-md-2 text-center">
+          @item.partsname
+        </div>
+        <div class="col col-md-2 text-center">
+          @item.partsnumber
+        </div>
+        <div class="col col-md-2 text-center">
+          @item.partsquantity
+        </div>
+        <div class="col col-md-2 text-center">
+          @item.partcost
+        </div>
+        <div class="col col-md-4 w-100">        
+          <button name="PartID" value="@item.Partsid" class="btn btn-danger">Delete</button>
+        </div>
+        @*}*@
+    }
+  </div>
+  <div class="text-center m-4">
+    <a class="btn btn-primary" href="@Url.Action("EditOrder", "WorkOrder", routeValues: new { OrderID = Model.OrderID })">
+      Edit Order
+    </a>
+    @Html.ActionLink("Cancel and return to Home Page", "Index", null,
+     htmlAttributes: new
+         {
+           @class = "btn btn-secondary"
+     })
+  </div>
+</div>
+
+@section Scripts{
+  <script>
+    $('.DeleteForm').submit(function (e) {
+      e.preventDefault();
+
+      const form = $(this)
+
+      const BlogId = form.find('[name=PartID]').val();
+
+      $.post('@Url.Action("Like")', { BlogId })
+        .done(function (data) {
+          if (data && data.Success === true) {
+            form.remove();
+        } else {
+          alert(data.message);
+        }
+      })
+        .fail(function (xhr, textStatus, errorThrown) {
+        alert(textStatus);
+      })
+    })
+  </script>
+}

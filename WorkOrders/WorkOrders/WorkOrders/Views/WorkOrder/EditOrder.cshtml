@@ -1,0 +1,150 @@
+﻿@model WorkOrders.Models.Order
+@{
+  ViewBag.Title = "Edit Order";
+}
+<div class="m-5">
+  <h1 class="w-100 text-center m-5 fas fa-briefcase"> Edit Work Order</h1>
+
+  @using (Html.BeginForm("EditOrder", "WorkOrder"))
+  {
+    @Html.ValidationSummary("", new { @class = "text-danger" });
+    @Html.HiddenFor(x => x.OrderID)
+    <div class="p-3">
+      <div class="form-group">
+        <label>Customer Name</label>
+        @Html.TextBoxFor(x => x.Customer.customername, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Customer.customername, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        @Html.TextBoxFor(x => x.Customer.PhoneNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Customer.PhoneNumber, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Order Number</label>
+        @Html.TextBoxFor(x => x.ordernumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ordernumber, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Technician Name</label>
+        @Html.TextBoxFor(x => x.techname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.techname, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Repair Date</label>
+        @Html.EditorFor(x => x.repairdate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(x => x.repairdate, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Year of Vehicle</label>
+        @Html.TextBoxFor(x => x.vehicleyear, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.vehicleyear, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Make of Vehicle</label>
+        @Html.TextBoxFor(x => x.vehiclemake, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.vehiclemake, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Model of Vehicle</label>
+        @Html.TextBoxFor(x => x.vehiclemodel, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.vehiclemodel, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Vehicle Odometer</label>
+        @Html.TextBoxFor(x => x.vehiclemileage, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.vehiclemileage, null, new { @class = "text-danger" })
+      </div>
+      <div class="form-group">
+        <label>Vehicle Liscence plate</label>
+        @Html.TextBoxFor(x => x.vehicleliscenseplate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.vehicleliscenseplate, null, new { @class = "text-danger" })
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <i class="far fa-save"></i>
+      Save Order
+    </button>
+    <a class="btn btn-primary" href="@Url.Action("AddParts", "WorkOrder", routeValues: new { OrderID = Model.OrderID })">
+      Add Parts
+    </a>
+    @Html.ActionLink("Cancel and return to Home Page", "Index", null,
+  htmlAttributes: new { @class = "btn btn-secondary" })
+  }
+</div>
+<div class="form-group">
+  <div id="UploadProgressBar" class="progress" style="height: 20px;">
+    <div class="progress-bar bg-info"
+         style="width: 0%;"
+         role="progressbar"
+         aria-valuenow="0"
+         aria-valuemin="0"
+         aria-valuemax="100">
+    </div>
+  </div>
+</div>
+
+@section Scripts{
+  <script>
+    function setProgress(percent) {
+      const percentString = percent.toFixed(0);
+      $('#UploadProgressBar .progress-bar')
+        .css('width', percentString + '%')
+        .attr('aria-valuenow', percentString)
+        .html(percentString + '% Uploaded')
+        .removeClass('bg-success bg-danger')
+        .addClass('progress-bar-striped progress-bar-animated bg-info');
+    }
+    function setProgressMessage(message, classes) {
+      $('#UploadProgressBar .progress-bar')
+        .html(message)
+        .removeClass('progress-bar-striped progress-bar-animated bg-info bg-success bg-danger')
+        .addClass(classes);
+    }
+
+    $('.EditResumeForm').submit(function (e) {
+      e.preventDefault();
+      $('#SaveButton').attr('disabled', true);
+
+      const form = this;
+      const formdata = new FormData(form);
+
+
+
+      $.ajax({
+        url: '@Url.Action("Edit")',
+        method: 'POST',
+        data: formdata,
+        contentType: false,
+        processData: false,
+        xhr: () => {
+          const xhr = new window.XMLHttpRequest();
+
+          xhr.upload.addEventListener('progress', evt => {
+            if (evt.lengthComputable) {
+              const percent = Math.floor(100 * evt.loaded / evt.total);
+              setProgress(percent)
+            }
+          }, false);
+
+          xhr.upload.addEventListener('load', evt => {
+            setProgressMessage('Saving Data...', 'progress-bar-striped progress-bar-animated bg-info')
+          }, false);
+
+          return xhr;
+        }
+      }).done(data => {
+        $('#SaveButton').attr('disabled', false);
+        if (data.Success === true) {
+          setProgressMessage(data.Message, 'bg-success');
+        } else {
+          setProgressMessage(data.Message, 'bg-danger');
+        }
+      })
+        .fail((xhr, textstatus, errorThrown) => {
+          $('#SaveButton').attr('disabled', false);
+          setProgressMessage('Failed!', 'bg-danger');
+        })
+    })
+  </script>
+}

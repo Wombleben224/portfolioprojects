@@ -1,0 +1,136 @@
+﻿@model Outcast_CC.Models.Member
+@{
+  ViewBag.Title = "CreateMember";
+}
+
+<div class="p-5 m-3 bg-light min-vh-100 d-block">
+  <h2 class="text-center font-weight-bold">Create Member</h2>
+
+  <div class="text-center container">
+    @using (Html.BeginForm("CreateMember", "Admin", FormMethod.Post,
+      new { @class = "CreateMemberForm", enctype = "multipart/form-data" }))
+    {
+      @Html.HiddenFor(x => x.memberId)
+      @Html.ValidationSummary("", new { @class = "text-danger" })
+      <div class="p-3">
+        <div class="form-group">
+          @Html.LabelFor(x => x.Username)
+          @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.Username, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          @Html.LabelFor(x => x.Name)
+          @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.Name, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          @Html.LabelFor(x => x.VehicleYear)
+          @Html.TextBoxFor(x => x.VehicleYear, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.VehicleYear, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          @Html.LabelFor(x => x.VehicleMake)
+          @Html.TextBoxFor(x => x.VehicleMake, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.VehicleMake, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          @Html.LabelFor(x => x.VehicleModel)
+          @Html.TextBoxFor(x => x.VehicleModel, new { @class = "form-control" })
+          @Html.ValidationMessageFor(x => x.VehicleModel, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          @Html.LabelFor(x => x.Bio)
+          @Html.TextAreaFor(x => x.Bio, new { @class = "form-control", rows = 7 })
+          @Html.ValidationMessageFor(x => x.Bio, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          @Html.Label("Profile Image")
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="ProfileImage" name="ProfileImage" accept=".jpg, .jpeg, .png"
+                   onchange="$(this).next().html(this.value || 'No File Chosen')">
+            <label class="custom-file-label" for="ProfileImage">No File Chosen</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="SaveButton">
+          <i class="fas fa-save"></i>
+          Save Member
+        </button>
+      </div>
+    }
+  </div>
+  <div class="form-group">
+    <div id="UploadProgressBar" class="progress" style="height: 20px;">
+      <div class="progress-bar bg-info"
+           style="width: 0%;"
+           role="progressbar"
+           aria-valuenow="0"
+           aria-valuemin="0"
+           aria-valuemax="100">
+      </div>
+    </div>
+  </div>
+</div>
+@section Scripts {
+  <script>
+    function setProgress(percent) {
+      const percentString = percent.toFixed(0);
+      $('#UploadProgressBar .progress-bar')
+        .css('width', percentString + '%')
+        .attr('aria-valuenow', percentString)
+        .html(percentString + '% Uploaded')
+        .removeClass('bg-success bg-danger')
+        .addClass('progress-bar-striped progress-bar-animated bg-info');
+    }
+    function setProgressMessage(message, classes) {
+      $('#UploadProgressBar .progress-bar')
+        .html(message)
+        .removeClass('progress-bar-striped progress-bar-animated bg-info bg-success bg-danger')
+        .addClass(classes);
+    }
+
+    $('.CreateMemberForm').submit(function (e) {
+      e.preventDefault();
+      $('#SaveButton').attr('disabled', true);
+
+      const form = this;
+      const formdata = new FormData(form);
+
+
+
+      $.ajax({
+        url: '@Url.Action("CreateMember")',
+        method: 'POST',
+        data: formdata,
+        contentType: false,
+        processData: false,
+        xhr: () => {
+          const xhr = new window.XMLHttpRequest();
+
+          xhr.upload.addEventListener('progress', evt => {
+            if (evt.lengthComputable) {
+              const percent = Math.floor(100 * evt.loaded / evt.total);
+              setProgress(percent)
+            }
+          }, false);
+
+          xhr.upload.addEventListener('load', evt => {
+            setProgressMessage('Saving Data...', 'progress-bar-striped progress-bar-animated bg-info')
+          }, false);
+
+          return xhr;
+        }
+      }).done(data => {
+        $('#SaveButton').attr('disabled', false);
+        if (data.Success === true) {
+          setProgressMessage(data.Message, 'bg-success');
+        } else {
+          setProgressMessage(data.Message, 'bg-danger');
+        }
+      })
+        .fail((xhr, textstatus, errorThrown) => {
+          $('#SaveButton').attr('disabled', false);
+          setProgressMessage('Failed!', 'bg-danger');
+        })
+    })
+  </script>
+}

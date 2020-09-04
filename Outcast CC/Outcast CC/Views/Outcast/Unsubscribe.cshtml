@@ -1,0 +1,19 @@
+﻿@model Outcast_CC.Models.AppUser
+@{
+  ViewBag.Title = "Unsubscribe";
+}
+
+  <div class="p-5 m-3 bg-light min-vh-100 d-block">
+    @if (Model != null && Model.IsConfirmed)
+    {
+      <h2>Unsubscribed!</h2>
+      <p>You are unsubscribed. We will miss you.</p>
+    }
+    else
+    {
+      <h2 class="text-danger">Failed!</h2>
+      <p class="text-danger">Your email address has not been confirmed.</p>
+    }
+
+  @Html.ValidationSummary(false, null, new { @class = "text-danger" })
+  </div>

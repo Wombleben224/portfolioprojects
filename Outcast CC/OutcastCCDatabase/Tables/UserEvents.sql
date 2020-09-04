@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[UserEvents]
+(
+	[Id] NVARCHAR(128) NOT NULL,
+	[EventId] INT NOT NULL,
+	FOREIGN KEY (ID) REFERENCES AspNetUsers(Id),
+	FOREIGN KEY (EventId) REFERENCES Events(EventId)
+)
